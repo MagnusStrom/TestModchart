@@ -26,7 +26,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate', 'options'];
+	var optionShit:Array<String> = ['story mode', 'options'];
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
@@ -78,7 +78,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
+		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets_WITH_TEST_OPTION_FIXED');
 
 		for (i in 0...optionShit.length)
 		{
