@@ -1194,6 +1194,8 @@ class PlayState extends MusicBeatState
 						};
 					}
 				case 4:
+					ModCharts.updateNoteVisibilty = true;
+					ModCharts.autoStrum = true;
 			}
 			swagCounter += 1;
 			// generateSong('fresh');
@@ -2957,15 +2959,16 @@ class PlayState extends MusicBeatState
 
 		if (SONG.song.toLowerCase() == 'test') // Modchart showcase song!!! Vocals by https://www.youtube.com/channel/UCVpDJmtu0P-6LcdKMe8Wc3A
 		{
-			ModCharts.updateNoteVisibilty = true;
-			ModCharts.autoStrum = true;
+			99 - 128
 			switch (curBeat)
 			{
 				case 1: 
 					strumLineNotes.forEach(function(note)
 					{
-						ModCharts.bounceLoop(note, Conductor.crochet / 1000);
+						//ModCharts.bounceLoop(note, Conductor.crochet / 1000);
 					});
+					// im lazy
+					ModCharts.cameraBounce(FlxG.camera, Conductor.crochet / 1000, 200);
 				case 3 | 7 | 11 | 14 | 18 | 22 | 26:
 					strumLineNotes.forEach(function(note)
 					{
@@ -2987,6 +2990,7 @@ class PlayState extends MusicBeatState
 						ModCharts.dadNotesVisible = false;
 					});
 				case 63:
+					ModCharts.cancelCamera(FlxG.camera.scroll);
 					var sky:FlxSprite = new FlxSprite(-600, -1500).loadGraphic(Paths.image('planeNight'));
 					ModCharts.moveTo(dad, -300, -1200, 1);
 					ModCharts.moveTo(boyfriend, 500, -1200, 1);
@@ -3011,7 +3015,7 @@ class PlayState extends MusicBeatState
 					//FlxG.camera.focusOn(camFollow.getPosition());
 				case 96:
 					ModCharts.dadNotesVisible = true;
-					ModCharts.moveStrumNotes(player2Strums, 0, 40, 1, 110, 0);
+					ModCharts.moveStrumNotes(player2Strums, 0, strumLine.y, 1, 110, 0);
 					ModCharts.cancelMovement(boyfriend);
 					ModCharts.cancelMovement(dad);
 					playerStrums.forEach(function(note)

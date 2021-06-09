@@ -181,12 +181,15 @@ class MainMenuState extends MusicBeatState
 								switch (daChoice)
 								{
 									case 'story mode':
-										FlxG.switchState(new StoryMenuState());
-										trace("Story Menu Selected");
-									case 'freeplay':
-										FlxG.switchState(new FreeplayState());
-
-										trace("Freeplay Menu Selected");
+										trace("test selected");
+										var poop = Highscore.formatSong('test', 1);
+										PlayState.SONG = Song.loadFromJson(poop, 'test');
+										PlayState.isStoryMode = false;
+										PlayState.storyDifficulty = 1;
+							
+										PlayState.storyWeek = 7;
+										trace('CUR WEEK' + PlayState.storyWeek);
+										LoadingState.loadAndSwitchState(new PlayState());
 
 									case 'options':
 										FlxTransitionableState.skipNextTransIn = true;

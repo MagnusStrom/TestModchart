@@ -1,3 +1,6 @@
+import flixel.group.FlxGroup;
+import flixel.FlxBasic.FlxType;
+import flixel.FlxCamera;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.effects.FlxTrail;
@@ -136,6 +139,20 @@ class ModCharts
 	}
 
 	/**
+	 * Haxeflixel has autism and needs this
+	 *
+	 * ```haxe
+	 * ModCharts.cancelCamera(arrow);
+	 * ```
+	 *
+	 * @param	Camera 		The Camera to cancel
+	 */
+	static public function cancelCamera(camera:Any)
+	{
+		FlxTween.cancelTweensOf(camera);//Remind me to uncomment this when magnus fixes it
+	}
+
+	/**
 	 * Toggles visibility for a sprite. Safe to run after the stage.
 	 *
 	 * ```haxe
@@ -196,4 +213,13 @@ class ModCharts
 	static public function fadeInObject(object) {
 		FlxTween.tween(object, {"alpha": 1}, 2);
 	}
+
+	/**
+	* Bounces the camera up and down infenitley. WIP
+	* @param camera		The camera to bounce.
+	*/
+	static public function cameraBounce(camera:FlxCamera, duration:Float, intensity:Float = 200) {
+		FlxTween.tween(camera, {'scroll.y': intensity}, duration, {ease: FlxEase.quadOut, type: FlxTween.PINGPONG});
+	}
+
 }
