@@ -215,11 +215,19 @@ class ModCharts
 	}
 
 	/**
+	 * Starts by fading out. WIP
+	 */
+
+	 static public function fadeInOutLoop(object:Any) {
+		FlxTween.tween(object, {"alpha": 0}, 2, {ease: FlxEase.quadOut, type: FlxTween.PINGPONG});
+	}
+
+	/**
 	* Bounces the camera up and down infenitley. WIP
 	* @param camera		The camera to bounce.
 	*/
 	static public function cameraBounce(camera:FlxCamera, duration:Float, intensity:Float = 200) {
-		FlxTween.tween(camera, {'scroll.y': intensity}, duration, {ease: FlxEase.quadOut, type: FlxTween.PINGPONG});
+		FlxTween.tween(camera, {'scroll.y': intensity}, duration, {ease: FlxEase.quadOut, type: FlxTweenType.PINGPONG});
 	}
 
 }

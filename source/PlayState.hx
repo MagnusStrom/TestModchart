@@ -176,6 +176,7 @@ class PlayState extends MusicBeatState
 
 	// modcharting
 	var block:FlxSprite;
+	var swapped:Bool = false;
 
 	function sustain2(strum:Int, spr:FlxSprite, note:Note):Void
 	{
@@ -1952,6 +1953,13 @@ class PlayState extends MusicBeatState
 				// THIS SUCKS (slightly less) DICK (than before)
 				if (ModCharts.stickNotes == true)
 				{
+					// test modcahrt stuff
+					if (curBeat > 128 && curBeat < 158 && !daNote.isFading) {
+						ModCharts.fadeInOutLoop(daNote);
+						daNote.isFading = true;
+					} else {
+						daNote.isFading = false;
+					}
 					var noteNum:Int = 0;
 					if (daNote.mustPress)
 					{
@@ -2217,8 +2225,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			trace('[ProjectFNF] Returned to Freeplay');
-			FlxG.switchState(new FreeplayState());
+			FlxG.switchState(new MainMenuState());
 		}
 	}
 
@@ -2957,9 +2964,17 @@ class PlayState extends MusicBeatState
 			dad.playAnim('cheer', true);
 		}
 
-		if (SONG.song.toLowerCase() == 'test') // Modchart showcase song!!! Vocals by https://www.youtube.com/channel/UCVpDJmtu0P-6LcdKMe8Wc3A
-		{
-			99 - 128
+
+			// SWAPPIGN
+			if (curBeat > 96 && curBeat < 127 || curBeat > 190 && curBeat < 227) {
+			//	var originalPos:Int = 110;
+			//	var originalPos2:Int = 709;
+				ModCharts.moveStrumNotes(playerStrums, swapped ? 609 : 0, strumLine.y, Conductor.crochet / 1000, 120, 0);
+				ModCharts.moveStrumNotes(player2Strums, swapped ? 0 : 609, strumLine.y, Conductor.crochet / 1000, 120, 0);
+				//trace(originalPos);
+				//trace(originalPos2);
+				swapped = !swapped;
+			}
 			switch (curBeat)
 			{
 				case 1: 
@@ -3033,8 +3048,16 @@ class PlayState extends MusicBeatState
 					add(dad);
 					add(boyfriend);
 					ModCharts.fadeInObject(block);
+					strumLineNotes.forEach(function(note)
+					{
+						ModCharts.fadeInOutLoop(note);
+					});
 				case 158:
 					ModCharts.fadeOutObject(block);
+					strumLineNotes.forEach(function(note)
+					{
+						ModCharts.cancelMovement(note);
+					});
 					// sky shit
 					var sky:FlxBackdrop = new FlxBackdrop(Paths.image('sky'), 1, 1, false, true, 0, 0);
 					sky.y = -1500;
@@ -3046,11 +3069,13 @@ class PlayState extends MusicBeatState
 					add(sky);
 					add(dad);
 					add(boyfriend);
-				case 160:
+					ModCharts.bfNotesVisible = false;
+				case 174:
+					ModCharts.moveTo(boyfriend, 900, -1200, 2);
+					ModCharts.bfNotesVisible = true;
+
 				//	camera.shake(0.05, 1, null, true, FlxAxes.X);
 			}
-
-		}
 
 		switch (curStage)
 		{
